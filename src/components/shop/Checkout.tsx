@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useCart } from "@/context/cartContext";
+import { useCart } from "../../context/CartContext";
 
 export default function Checkout() {
     const { data: session } = useSession();

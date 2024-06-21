@@ -4,7 +4,7 @@ import "./globals.css";
 import SessionProvider from "@/components/sessionprovider/SessionProvider";
 import { Session } from "next-auth";
 import { Loading } from "@/components/utils/Loading";
-import { CartProvider } from "@/context/cartContext";
+import { CartProvider } from "../context/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 

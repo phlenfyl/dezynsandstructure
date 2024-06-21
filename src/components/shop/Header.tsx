@@ -5,7 +5,7 @@ import Link from "next/link";
 import { initFlowbite } from 'flowbite'
 import { signOut, useSession} from "next-auth/react";
 import { CartItem } from "@/app/api/auth/types";
-import { useCart } from "@/context/cartContext";
+import { useCart } from "../../context/CartContext";
 import { useRouter } from 'next/navigation';
 import Search from "./Search";
 import { Suspense } from 'react'
