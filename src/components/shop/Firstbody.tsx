@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import EmblaCarousel from '../utils/Emblacarousel';
 import { EmblaOptionsType } from 'embla-carousel'
 import Image from 'next/image';
-import { initFlowbite } from 'flowbite';
 import { motion } from "framer-motion";
 import { getCategories } from '../../app/api/auth/api';
 import { Category } from '@/app/api/auth/types';
@@ -141,9 +140,6 @@ export default function Firstbody() {
     fetchData();
   }, []);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
   useEffect(() => {
     const nextSlideAuto = () => {
       setCurrentIndex((previousIndex) => (previousIndex + 1) % images.length);
@@ -152,10 +148,6 @@ export default function Firstbody() {
     const intervalId = setInterval(nextSlideAuto, 3000);
 
     return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    initFlowbite();
   }, []);
 
   const toggleModal = (modal: string) => {
@@ -167,6 +159,10 @@ export default function Firstbody() {
       setVisible(false);
     }
   };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
   return (
     <div className="flex flex-col md:flex-row divide-x items-cente justify-center border-t border-gray-700 shadow-t pb-[4em]">
       <div className="basis-1/3 xl:basis-1/4 pr-9 md:pt-1 pt-6 xl:pt-7">
