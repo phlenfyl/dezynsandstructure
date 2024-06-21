@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Product } from '@/app/api/auth/types';
-import { ImageCarousel } from '../../[slug]/page';
+import { Imagecarousel } from '@/components/shop/Imagecarousel';
 import Link from 'next/link';
 import { useSession} from "next-auth/react";
 import Modal from '@/components/shop/Modal';
@@ -88,7 +88,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
             <div className="shop1 px-4 p-1 pb-7 mt-5 relative">
                 {product?.product_images && product?.product_images.length > 0 ? (
-                    <ImageCarousel images={product?.product_images} />
+                    <Imagecarousel images={product?.product_images} />
                 ) : (
                     <div>
                         

@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import { Product } from '@/app/api/auth/types';
-import { ImageCarousel } from '@/app/shop/[slug]/page';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useSession} from "next-auth/react";
 import { getProduct, API_URL } from '@/app/api/auth/api';
 import Modal from './Modal';
+import { Imagecarousel } from './Imagecarousel';
 
 export default function Maincontent() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -62,7 +62,7 @@ export default function Maincontent() {
 
       {products.map((slide) => (
         <div key={slide.id} className="shop1 px-4 p-1 pb-7 mt-5 relative" >
-          <ImageCarousel images ={slide.product_images} baseUrl={API_URL}/>
+          <Imagecarousel images ={slide.product_images} baseUrl={API_URL}/>
           <div className="w-full relative max-w-[55em] -mt-[6em] lg:-mt-[12em] z-[99] bg-black/50 font-semibold text-white py-4 lg:py-10 mx-auto rounded-lg">
             <div className='mx-10'>
                 <p className='font-sans max-w-[50em] pb-2 text-xs md:text-base tracking-[1.4px] md:tracking-0'>

@@ -8,7 +8,7 @@ import { getCategorySlug } from '@/app/api/auth/api';
 import { API_URL } from '@/app/api/auth/api';
 import { useSession} from "next-auth/react";
 import Modal from '@/components/shop/Modal';
-
+import { Imagecarousel } from '@/components/shop/Imagecarousel';
 
 export default function Page() {
     const [currentInfo, setCurrentInfo] = useState('')
@@ -105,7 +105,7 @@ export default function Page() {
                 
                 {products.map((slide) => (
                     <div key={slide.id} className="shop1 px-4 p-1 pb-7 mt-5 relative">
-                        <ImageCarousel images={slide.product_images} baseUrl={API_URL}/>
+                        <Imagecarousel images={slide.product_images} baseUrl={API_URL}/>
 
                         <div className="w-full relative max-w-[55em] -mt-[8em] lg:-mt-[15em] z-[99] bg-black/50 font-semibold text-white py-4 lg:py-10 mx-auto rounded-lg">
                             <div className='mx-10'>
@@ -173,49 +173,3 @@ export default function Page() {
     )
 }
 
-
-interface ImageCarouselProps {
-    images: ProductImage[];
-    baseUrl?: string;
-}
-
-export const ImageCarousel = ({ images, baseUrl = '' }: ImageCarouselProps) => {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-        setCurrentImageIndex(prevIndex => (prevIndex + 1) % images.length);
-      }, 3000); // Change image every 3 seconds
-  
-      return () => clearInterval(intervalId); // Cleanup interval on component unmount
-    }, [images.length]);
-  
-    return (
-        <Image
-            src={`${baseUrl}${images[currentImageIndex].image}`}
-            alt={images[currentImageIndex].alt_text}
-            width={1200}
-            height={1000}
-            priority
-            className="w-full max-h-[40em] lg:h-[35em] rounded-lg shadow-xl md:h-[20em] h-[15em] mb-10"
-        />
-    );
-};
-
-
-
-// useEffect(() => {
-//     setImageIndexes(new Array(dat.length).fill(0));
-// }, [dat]);
-
-// useEffect(() => {
-//     const intervalId = setInterval(() => {
-//       setImageIndexes((prevIndexes) => {
-//         return prevIndexes.map((index, slideIndex) => {
-//           return (index + 1) % dat[slideIndex]?.image.length;
-//         });
-//       });
-//     }, 3000);
-
-//     return () => clearInterval(intervalId);
-// }, [dat]);
