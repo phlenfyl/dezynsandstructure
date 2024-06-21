@@ -4,10 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import PriceWithoutcart from './Pricewithoutcart';
-import { getSession } from 'next-auth/react';
-import { Session } from 'next-auth';
-import { signOut, useSession} from "next-auth/react";
-// import { useAuth } from '@/app/api/auth/useAuth';
+import { useSession} from "next-auth/react";
 
 export default function Price({subscribe,}: {subscribe:Subscribe}) {
     const router = useRouter();
@@ -15,10 +12,7 @@ export default function Price({subscribe,}: {subscribe:Subscribe}) {
     const productId = searchParams?.get('productId') as string;
     const [product, setProduct] = useState<Product | null>(null);
     const [pricing, setPricing] = useState<Pricing | null>(null);
-    // const session = await getSession();
     const { data: session, status } = useSession();
-
-    // const { session, status } = useAuth();
 
     useEffect(() => {
         const fetchProductAndPricing = async () => {
@@ -40,7 +34,6 @@ export default function Price({subscribe,}: {subscribe:Subscribe}) {
             if (!session) {
                 // Handle case where user is not authenticated
                 console.log('User is not authenticated.');
-                console.log(session)
                 return;
             }
             console.log(`${session?.access_token}`)
@@ -56,7 +49,6 @@ export default function Price({subscribe,}: {subscribe:Subscribe}) {
                 }            
             }
             );
-            console.log(response.data)
             if (response.data.message){
                 router.replace('/cart');
             }
@@ -67,10 +59,6 @@ export default function Price({subscribe,}: {subscribe:Subscribe}) {
     if (!product || !pricing) {
         return  <PriceWithoutcart/>
     }
-
-    subscribe.map(item => (
-        console.log(item?.monthly)
-    ))
     return (
     <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
@@ -179,15 +167,15 @@ export default function Price({subscribe,}: {subscribe:Subscribe}) {
                         </li>
                     </ul>
                     <div className="mb-8">
-                        <span className="text-1xl font-extrabold text-white">${subscribe?.monthly}</span>
+                        <span className="text-1xl font-extrabold text-white">$500</span>
                         <span className="text-xl font-medium text-gray-400">/mo</span>
                     </div>
                     <div className="mb-8">
-                        <span className="text-1xl font-extrabold text-white">${subscribe?.quaterly}</span>
+                        <span className="text-1xl font-extrabold text-white">$3000</span>
                         <span className="text-xl font-medium text-gray-400">/quater</span>
                     </div>
                     <div className="mb-8">
-                        <span className="text-1xl font-extrabold text-white">${subscribe?.yearly}</span>
+                        <span className="text-1xl font-extrabold text-white">$10,000</span>
                         <span className="text-xl font-medium text-gray-400">/yr</span>
                     </div>
                     <a href="/shop" className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-transparent border border-white hover:bg-white hover:text-[#451606] hover:border hover-border-[#451606] font-medium0">

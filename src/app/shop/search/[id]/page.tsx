@@ -91,7 +91,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                     <Imagecarousel images={product?.product_images} />
                 ) : (
                     <div>
-                        
+                        No image
                     </div>
                 )}
                 <div className="w-full relative max-w-[55em] -mt-[8em] lg:-mt-[15em] z-[99] bg-black/50 font-semibold text-white py-4 lg:py-10 mx-auto rounded-lg">
