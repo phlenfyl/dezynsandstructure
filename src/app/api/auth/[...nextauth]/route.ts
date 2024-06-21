@@ -5,7 +5,7 @@ import axios from 'axios';
 // import axios from 'axios';
 
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     // GoogleProvider({
     //   clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -29,6 +29,7 @@ const authOptions: NextAuthOptions = {
               password: credentials?.password,
             });
             const data = response.data;
+            console.log(data)
             if (data && data.user && data.access && data.refresh) {
               console.log(data.access)
               return {
@@ -108,7 +109,7 @@ const authOptions: NextAuthOptions = {
       }
     },
   },
-  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);

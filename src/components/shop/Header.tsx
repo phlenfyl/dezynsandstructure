@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { initFlowbite } from 'flowbite'
 import { signOut, useSession} from "next-auth/react";
-import { CartItem } from "@/app/api/auth/types";
 import { useCart } from "../../context/CartContext";
 import { useRouter } from 'next/navigation';
 import Search from "./Search";
@@ -85,7 +84,7 @@ function Header() {
                         </div>
                     )}
                     {/* small screen end */}
-                    {status === "authenticated" ? (
+                    {status === "authenticated" && session ? (
                         <Suspense fallback={<div className="border-gray-300 h-10 w-10 animate-spin rounded-full border-8 border-t-[#451606]" />}>
                             <div className="flex items-center space-x-6 rtl:space-x-reverse">
                                 <Link href="/cart" className="">
