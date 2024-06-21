@@ -1,12 +1,12 @@
 "use client"
-import { Pricing, Subscribe, Product } from '@/app/api/auth/types'
+import { Pricing, Product } from '@/app/api/auth/types'
 import React, { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import PriceWithoutcart from './Pricewithoutcart';
 import { useSession} from "next-auth/react";
 
-export default function Price({subscribe,}: {subscribe:Subscribe}) {
+export default function Price() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const productId = searchParams?.get('productId') as string;

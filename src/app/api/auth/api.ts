@@ -34,15 +34,6 @@ export async function getPricing(endpoint: string): Promise<Pricing> {
     return data;
 }
 
-export async function getSubscribe(endpoint: string): Promise<Subscribe> {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {cache: 'no-store', next: { revalidate: 1300 } });
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
-    }
-    const data = await response.json();    
-    return data;
-}
-
 
 export async function getCategorySlug(slug: string): Promise<PaginatedResponse<Product>> {
     const response = await fetch(`${API_BASE_URL}categoryslugs/${slug}`, {cache: 'no-store', next: { revalidate: 1300 } });
