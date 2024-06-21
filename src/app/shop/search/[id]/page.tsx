@@ -8,7 +8,7 @@ import { useSession} from "next-auth/react";
 import Modal from '@/components/shop/Modal';
 
 
-const page = ({ params }: { params: { id: string } }) => {
+const Page = ({ params }: { params: { id: string } }) => {
     const [product, setProduct] = useState<Product | null>(null);
     const productId = params.id;
     const [visible, setVisible] = useState(false)
@@ -129,4 +129,4 @@ const page = ({ params }: { params: { id: string } }) => {
     );
 };
 
-export default page;
+export default Page;

@@ -2,6 +2,7 @@ import { Category, PaginatedResponse, Product, Pricing, Subscribe } from "./type
 
 const API_BASE_URL = 'https://dnstructures.pythonanywhere.com/shop/';
 export const API_URL = 'https://dnstructures.pythonanywhere.com/';
+export const CART_URL = 'https://dnstructures.pythonanywhere.com';
 
 
 export async function getProduct(endpoint: string): Promise<PaginatedResponse<Product>>{

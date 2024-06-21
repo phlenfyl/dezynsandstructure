@@ -1,11 +1,5 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import Swipers from '../swiper/Swipers';
-import Link from 'next/link';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import EmblaCarousel from '../utils/Emblacarousel';
 import { EmblaOptionsType } from 'embla-carousel'
 import Image from 'next/image';
@@ -14,6 +8,7 @@ import { motion } from "framer-motion";
 import { getCategories } from '../../app/api/auth/api';
 import { Category } from '@/app/api/auth/types';
 import Search from './Search';
+import Link from 'next/link';
 // import { GetServerSideProps } from 'next';
 
 
@@ -121,7 +116,8 @@ const images = [
 
 export default function Firstbody() {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [visible, setVisible] = useState(false)
+  const [lands, setLands] = useState(false)
   const [houses, setHouses] = useState<Category[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -148,8 +144,6 @@ export default function Firstbody() {
   if (error) {
     return <div>{error}</div>;
   }
-
-  console.log(houses)
   useEffect(() => {
     const nextSlideAuto = () => {
       setCurrentIndex((previousIndex) => (previousIndex + 1) % images.length);
@@ -158,12 +152,11 @@ export default function Firstbody() {
     const intervalId = setInterval(nextSlideAuto, 3000);
 
     return () => clearInterval(intervalId);
-  }, [images.length]);
+  }, []);
+
   useEffect(() => {
     initFlowbite();
   }, []);
-  const [visible, setVisible] = useState(false)
-  const [lands, setLands] = useState(false)
 
   const toggleModal = (modal: string) => {
     if (modal === 'houses') {
