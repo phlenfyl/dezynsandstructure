@@ -82,7 +82,7 @@ const Productlist = () => {
                         <span dangerouslySetInnerHTML={{ __html: product.info }} />
                       )}
                     </span>
-                    <Link href={`shop/search/${product.id}`} className='underline decoration-blue-500 font-semibold text-base'> Continue Reading</Link>
+                    <Link href={`search/${product.id}`} className='underline decoration-blue-500 font-semibold text-base'> Continue Reading</Link>
                   </div>
                 </div>
               </div>

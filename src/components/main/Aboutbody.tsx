@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function Aboutbody() {
     return (
-        <div className="bg-transparent pb-16 h-screen">
+        <div className="bg-transparent pb-16">
             <section id="features"
                 className="relative block px-6 py-6 md:px-10">
 

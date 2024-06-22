@@ -235,8 +235,7 @@ export default function Firstbody() {
                                     </div>
                                   ))}
                                   <div className="flex justify-between items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                      <Link href="" onClick={() => toggleModal('houses')} type="button" className="text-white bg-[#451606] focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">View Floor Plans and Summarized BOQ</Link>
-                                      <Link href="" onClick={() => toggleModal('houses')} type="button" className="py-2.5 px-5 ml-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-[#451606] focus:z-10 focus:ring-4">BUY THE FULL WORKING DRAWINGS</Link>
+                                      <Link href="" onClick={() => toggleModal('houses')} type="button" className="text-white bg-[#451606] focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">close</Link>
                                   </div>
                               </div>
                           </div>
@@ -323,8 +322,7 @@ export default function Firstbody() {
                                   </div>
                                 ))}
                                 <div className="flex justify-between items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                    <Link href="" onClick={() => toggleModal('lands')} type="button" className="text-white bg-[#451606] focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">View Floor Plans and Summarized BOQ</Link>
-                                    <Link href="" onClick={() => toggleModal('lands')} type="button" className="py-2.5 px-5 ml-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-[#451606] focus:z-10 focus:ring-4">BUY THE FULL WORKING DRAWINGS</Link>
+                                    <Link href="" onClick={() => toggleModal('lands')} type="button" className="text-white bg-[#451606] focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">close</Link>
                                 </div>
                             </div>
                         </div>

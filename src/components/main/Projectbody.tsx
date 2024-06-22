@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
 import Image from 'next/image'
-import { initFlowbite } from 'flowbite';
 
 
 
@@ -110,11 +109,8 @@ const projects = [
 
 
 export default function Projectbody() {
-    useEffect(() => {
-        initFlowbite();
-    }, []);
     return (
-        <div className='h-screen'>
+        <div className=''>
             <div>
                 <div className="relative w-full mx-auto text-center mb-10">
                     <Image className="h-44 w-full object-cover" width={1000} height={1000} src="/duplex.png" alt="Random image"/>
@@ -165,7 +161,7 @@ export default function Projectbody() {
                             </div>
                         </div>
                         <div className="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                            <p className="text-sm text-gray-500 dark:text-gray-400 h-screen">
                                 Coming Soon
                             </p>
                         </div>

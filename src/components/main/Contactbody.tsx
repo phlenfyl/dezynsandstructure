@@ -3,7 +3,7 @@ import React from 'react'
 export default function Contactbody() {
   return (
     <div>
-        <div className='pt-3 pb-12 h-screen'>
+        <div className='pt-3 pb-12 md:h-screen'>
             <p className='pt-4 pb-12 ml-10 text-base md:text-[20px] font-semibold'>You Can Reach Out To Us</p>
             <div>
                 <div className="grid grid-cols-1 md:grid-cols-2">
