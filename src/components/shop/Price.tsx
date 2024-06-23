@@ -74,7 +74,7 @@ export default function Price() {
 
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5">
 
-                <div className="bg-cyan-950 opacity-[20px] text-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
+                <div className="bg-cyan-950 opacity-[20px] text-white rounded-lg shadow-lg p-6 md:transform md:hover:scale-105 md:transition md:duration-300">
                     <div className="mb-8">
                         <h3 className="text-2xl font-semibold uppercase">Premium plus</h3>
                     </div>
@@ -92,12 +92,12 @@ export default function Price() {
                             <span>BOQ</span>
                         </li>
                     </ul>
-                    <button onClick={() => handleAddToCart(pricing?.premium_plus, 'Premium Plus')} className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-transparent border border-white hover:bg-white hover:text-[#451606] hover:border hover-border-[#451606]">
+                    <button type="submit" onClick={() => handleAddToCart(pricing?.premium_plus, 'Premium Plus')} className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-transparent border border-white hover:bg-white hover:text-[#451606] hover:border hover-border-[#451606]">
                      Get Started
                     </button>
                 </div>
 
-                <div className="bg-emerald-600 opacity-[20px] text-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
+                <div className="bg-emerald-600 opacity-[20px] text-white rounded-lg shadow-lg p-6 md:transform md:hover:scale-105 md:transition md:duration-300">
                     <div className="mb-8">
                         <h3 className="text-2xl font-semibold text-white uppercase">Premium</h3>
                     </div>
@@ -112,12 +112,12 @@ export default function Price() {
                             <span>full working drawing</span>
                         </li>
                     </ul>
-                    <button onClick={() => handleAddToCart(pricing?.premium, 'Premium')} className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-transparent border border-white hover:bg-white hover:text-[#451606] hover:border hover-border-[#451606] font-medium0">
+                    <button type="submit" onClick={() => handleAddToCart(pricing?.premium, 'Premium')} className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-transparent border border-white hover:bg-white hover:text-[#451606] hover:border hover-border-[#451606] font-medium">
                         Get Started
                     </button>
                 </div>
 
-                <div className="bg-yellow-500 opacity-[20px] text-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
+                <div className="bg-yellow-500 opacity-[20px] text-white rounded-lg shadow-lg p-6 md:transform md:hover:scale-105 md:transition md:duration-300">
                     <div className="mb-8">
                         <h3 className="text-2xl font-semibold text-white uppercase">Standard</h3>
                     </div>
@@ -132,12 +132,12 @@ export default function Price() {
                             <span>3D exterior view</span>
                         </li>
                     </ul>
-                    <button onClick={() => handleAddToCart(pricing?.standard, 'Standard')} className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-transparent border border-white hover:bg-white hover:text-[#451606] hover:border hover-border-[#451606] font-medium0">
+                    <button type="submit" onClick={() => handleAddToCart(pricing?.standard, 'Standard')} className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-transparent border border-white hover:bg-white hover:text-[#451606] hover:border hover-border-[#451606] font-medium0">
                         Get Started
                     </button>
                 </div>
 
-                <div className="bg-orange-600 opacity-[20px] text-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
+                <div className="bg-orange-600 opacity-[20px] text-white rounded-lg shadow-lg p-6 md:transform md:hover:scale-105 md:transition md:duration-300">
                     <div className="mb-8">
                         <h3 className="text-2xl font-semibold text-white uppercase">Regular</h3>
                     </div>
@@ -151,12 +151,12 @@ export default function Price() {
                             <span>3D front view only</span>
                         </li>
                     </ul>
-                    <button onClick={() => handleAddToCart(pricing?.regular, 'Regular')} className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-transparent border border-white hover:bg-white hover:text-[#451606] hover:border hover-border-[#451606] font-medium0">
+                    <button type="submit" onClick={() => handleAddToCart(pricing?.regular, 'Regular')} className="block w-full py-3 px-6 text-center rounded-md text-white font-medium bg-transparent border border-white hover:bg-white hover:text-[#451606] hover:border hover-border-[#451606] font-medium0">
                         Get Started
                     </button>
                 </div>
 
-                <div className="bg-stone-500 opacity-[20px] text-white rounded-lg shadow-lg p-6 transform hover:scale-105 transition duration-300">
+                <div className="bg-stone-500 opacity-[20px] text-white rounded-lg shadow-lg p-6 md:transform md:hover:scale-105 md:transition md:duration-300">
                     <div className="mb-8">
                         <h3 className="text-2xl font-semibold text-white uppercase">Subscribe</h3>
                     </div>

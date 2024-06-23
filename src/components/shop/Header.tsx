@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { initFlowbite } from 'flowbite'
@@ -7,7 +7,6 @@ import { signOut, useSession} from "next-auth/react";
 import { useCart } from "../../context/CartContext";
 import { useRouter } from 'next/navigation';
 import Search from "./Search";
-import { Suspense } from 'react'
 
 function Header() {
     const { data: session, status } = useSession();
@@ -98,11 +97,12 @@ function Header() {
                                     </div>
                                 </Link>
                                 <details className="mb-2" style={{marginLeft: '-10px'}}>
-                                    <summary className="bg-transparent flex flex-col md:flex-row p-3 cursor-pointer gap-2">
-                                        <span className="font-semibold">Welcome</span>
+                                    <summary className="bg-transparent flex p-3 cursor-pointer md:gap-2">
+                                        <span className="font-semibold hidden md:block">Welcome</span>
                                         <span className="text-gray-600">{name}</span>
+                                        <Image src={'/avatar.png'} alt="avatar" width={20} height={20} className="mt-1 block md:hidden" />
                                     </summary>
-                                    <div className="px-4 pb-4 z-10 bg-white divide-y divide-gray-100 md:-ml-10 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 absolute p-4">
+                                    <div className="px-4 pb-4 z-10 bg-white divide-y divide-gray-100 -ml-32 md:-ml-10 rounded-lg shadow-lg w-44 dark:bg-gray-700 dark:divide-gray-600 absolute p-4">
                                         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                                             <div>{name} </div>
                                             <div className="font-medium truncate">{session?.user.email}</div>
