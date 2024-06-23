@@ -3,11 +3,12 @@ import { EmblaOptionsType } from 'embla-carousel'
 import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel from 'embla-carousel-react'
 import Image from 'next/image'
-
 interface slide {
   id: number;
+  carousel: number;
   image: string;
-  title: string;
+  alt_text: string;
+  created: string;
 }
 
 type PropType = {
@@ -18,14 +19,13 @@ type PropType = {
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()])
-
   return (
     <section className="embla">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
           {slides.map((index) => (
             <div className="embla__slide" key={index.id}>
-              <Image alt={index.title} width={1000} height={1000} src={index.image} className='embla__slide__number' />
+              <Image alt={index.alt_text} width={1000} height={1000} src={index.image} className='embla__slide__number' />
             </div>
           ))}
         </div>

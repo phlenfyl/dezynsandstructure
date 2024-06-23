@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useCart } from "../../context/CartContext";
+import axios from "axios";
 
 export default function Checkout() {
     const { data: session } = useSession();
-    const { cart, totalPrice } = useCart();
+    const { cart, totalPrice, plan_name } = useCart();
+    const [paymentMethod, setPaymentMethod] = useState('paystack');
     const [formData, setFormData] = useState({
         name: '',
         email: session?.user?.email || '',
@@ -25,26 +27,27 @@ export default function Checkout() {
         try {
             const dataToSend = {
                 ...formData,
-                totalPrice: totalPrice
+                total: totalPrice,
+                payment_method: paymentMethod,
+                plan_name: plan_name,
             };
-            const response = await fetch('https://dnstructures.pythonanywhere.com/api/checkout/', {  // Adjust the URL to match your Django endpoint
-                method: 'POST',
+            const response = await axios.post('https://dnstructures.pythonanywhere.com/cart/paidorder/', dataToSend, {  // Adjust the URL to match your Django endpoint
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${session?.access_token}`  // Include token if needed
                 },
-                body: JSON.stringify(dataToSend)
             });
-            if (response.ok) {
-                // Handle success, maybe redirect to a success page
-                alert('Order placed successfully!');
+            console.log(response.data)
+            if (paymentMethod === 'paystack') {
+                window.location.href = response.data.redirect_url;
             } else {
-                // Handle error
-                alert('Failed to place the order. Please try again.');
+                alert('Your Record as been saved, We will Reach out as soon as the payment is confirmed')
             }
+            if (response.data.error) {
+                alert('Payment initialization failed');
+        }
         } catch (error) {
-            console.error('Error submitting form:', error);
-            alert('An error occurred. Please try again.');
+            console.error('Payment initialization failed:', error);
+            alert('Payment initialization failed. Please try again.');
         }
     };
 
@@ -58,8 +61,8 @@ export default function Checkout() {
 
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
-                                <label htmlFor="your_name" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Your name </label>
-                                <input type="text" id="your_name" value={formData.name} onChange={handleChange} className="block w-full rounded-lg border border-[#451606]/40 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-[#451606] focus:ring-[#451606] dark:placeholder:text-gray-400 dark:focus:border-[#451606] dark:focus:ring-[#451606]" placeholder="Bonnie Green" required />
+                                <label htmlFor="your_name" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Your name* </label>
+                                <input type="text" id="name" value={formData.name} onChange={handleChange} className="block w-full rounded-lg border border-[#451606]/40 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-[#451606] focus:ring-[#451606] dark:placeholder:text-gray-400 dark:focus:border-[#451606] dark:focus:ring-[#451606]" placeholder="Name" required />
                             </div>
 
                             <div>
@@ -69,12 +72,12 @@ export default function Checkout() {
 
                             <div>
                                 <label htmlFor="phone" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Phone Number* </label>
-                                <input type="text" id="phone" value={formData.phone} onChange={handleChange} className="block w-full rounded-lg border border-[#451606]/40 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-[#451606] focus:ring-[#451606] dark:placeholder:text-gray-400 dark:focus:border-[#451606] dark:focus:ring-[#451606]" placeholder="000 000 000 00" required />
+                                <input type="phone" id="phone" value={formData.phone} onChange={handleChange} className="block w-full rounded-lg border border-[#451606]/40 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-[#451606] focus:ring-[#451606] dark:placeholder:text-gray-400 dark:focus:border-[#451606] dark:focus:ring-[#451606]" placeholder="000 000 000 00" required />
                             </div>
 
                             <div>
-                                <label htmlFor="company_name" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Company name </label>
-                                <input type="text" id="company_name" value={formData.companyName} onChange={handleChange} className="block w-full rounded-lg border border-[#451606]/40 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-[#451606] focus:ring-[#451606] dark:placeholder:text-gray-400 dark:focus:border-[#451606] dark:focus:ring-[#451606]" placeholder="Flowbite LLC" required />
+                                <label htmlFor="company_name" className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Company name* </label>
+                                <input type="text" id="companyName" value={formData.companyName} onChange={handleChange} className="block w-full rounded-lg border border-[#451606]/40 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-[#451606] focus:ring-[#451606] dark:placeholder:text-gray-400 dark:focus:border-[#451606] dark:focus:ring-[#451606]" placeholder="company name" required />
                             </div>
                         </div>
                     </div>
@@ -86,7 +89,7 @@ export default function Checkout() {
                             <div className="pb-10 rounded-lg border border-[#451606]/40 bg-[#1D4ED8] p-4 ps-4">
                                 <div className="flex items-start">
                                     <div className="flex h-5 items-center">
-                                        <input id="paystack" type="checkbox" value="" className="w-3 h-3 rounded-full text-[#451606]" checked />
+                                        <input id="paystack" type="checkbox" value="paystack" checked={paymentMethod === 'paystack'} className="w-3 h-3 rounded-full text-[#451606]"  onChange={() => setPaymentMethod('paystack')} />
                                     </div>
 
                                     <div className="ms-4 text-sm">
@@ -99,7 +102,7 @@ export default function Checkout() {
                             <div className="rounded-lg border border-[#451606]/40 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-[#1D4ED8]">
                                 <div className="flex items-start">
                                     <div className="flex h-5 items-center">
-                                        <input id="Direct-transfer" type="checkbox" value="" className="w-3 h-3 rounded-full text-[#451606]" />
+                                        <input id="Direct-transfer" name="paymentMethod" checked={paymentMethod === 'bankTransfer'} onChange={() => setPaymentMethod('bankTransfer')} type="checkbox" value="bankTransfer" className="w-3 h-3 rounded-full text-[#451606]" />
                                     </div>
 
                                     <div className="ms-4 text-sm">
@@ -117,12 +120,12 @@ export default function Checkout() {
                         <div className="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
                             <dl className="flex items-center justify-between gap-4 py-3">
                                 <dt className="text-base font-normal text-gray-500 dark:text-gray-400">Subtotal</dt>
-                                <dd className="text-base font-medium text-gray-900 dark:text-white">₦{totalPrice}</dd>
+                                <dd className="text-base font-medium text-gray-900 dark:text-white">₦{totalPrice.toLocaleString()}</dd>
                             </dl>
 
                             <dl className="flex items-center justify-between gap-4 py-3">
                                 <dt className="text-base font-bold text-gray-900 dark:text-white">Total</dt>
-                                <dd className="text-base font-bold text-gray-900 dark:text-white">₦{totalPrice}</dd>
+                                <dd className="text-base font-bold text-gray-900 dark:text-white">₦{totalPrice.toLocaleString()}</dd>
                             </dl>
                         </div>
                     </div>

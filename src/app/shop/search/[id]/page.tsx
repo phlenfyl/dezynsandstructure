@@ -88,7 +88,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
             <div className="shop1 px-4 p-1 pb-7 mt-5 relative">
                 {product?.product_images && product?.product_images.length > 0 ? (
-                    <Imagecarousel images={product?.product_images} />
+                    <Imagecarousel images={product?.product_images} classname ={"w-full max-h-[40em] lg:h-[35em] rounded-lg shadow-xl md:h-[20em] h-[15em] mb-10"} />
                 ) : (
                     <div>
                         No image

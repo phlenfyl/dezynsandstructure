@@ -2,135 +2,35 @@
 import React, { useEffect, useState } from 'react';
 import EmblaCarousel from '../utils/Emblacarousel';
 import { EmblaOptionsType } from 'embla-carousel'
-import Image from 'next/image';
 import { motion } from "framer-motion";
-import { getCategories } from '../../app/api/auth/api';
-import { Category } from '@/app/api/auth/types';
+import { getCarousel, getCategories } from '../../app/api/auth/api';
+import { Category, CarouselImage, ComingSoon } from '@/app/api/auth/types';
 import Search from './Search';
 import Link from 'next/link';
-// import { GetServerSideProps } from 'next';
-
-
-
-const carousel = [
-  {
-    id: 1,
-    image: "/master.png",
-    title: "Master",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-  {
-    id: 2,
-    image: "/living.png",
-    title: "Living",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-  {
-    id: 3,
-    image: "/dining.png",
-    title: "Dining",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-  {
-    id: 4,
-    image: "/exterior.png",
-    title: "Exterior",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-  {
-    id: 3,
-    image: "/duplex.png",
-    title: "Duplex",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-];
-const carousels = [
-  {
-    id: 1,
-    image: "/living.png",
-    title: "Living",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-  {
-    id: 2,
-    image: "/duplex.png",
-    title: "Duplex",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-  {
-    id: 3,
-    image: "/master.png",
-    title: "Master",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-  {
-    id: 4,
-    image: "/exterior.png",
-    title: "Exterior",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-  {
-    id: 5,
-    image: "/dining.png",
-    title: "Dining",
-    name: "`A CONTEMPORARY SHOPPING MALL, WITH A MULTI PURPOSE HALL, RESTAURANT,LOUNGE/CLUB ON THE PENT FLOOR AND BASEMENT CAR PARK SITTING ON AN 2,450 SQ.M LAND`",
-    info: "Master",
-    smallprice: 19200,
-    largeprice: 950000,
-  },
-];
+import { Imagecarousel } from './Imagecarousel';
 
 const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true }
 
-const images = [
-  '/VIEW 1B.jpg', "/VIEW 2B.jpg", "/VIEW 3B.jpg", "/VIEW 4B.jpg",  "/VIEW 5B.jpg",
-]
-
 export default function Firstbody() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [visible, setVisible] = useState(false)
   const [lands, setLands] = useState(false)
   const [houses, setHouses] = useState<Category[]>([]);
+  const [carouselimage, setCarouselImage] = useState<CarouselImage[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [categoriesData, housesData] = await Promise.all([
+        const [categoriesData, housesData, carouselDate] = await Promise.all([
           getCategories('landcategory'),
-          getCategories('housecategory')
+          getCategories('housecategory'),
+          getCarousel('carousel')
         ]);
 
         setCategories(categoriesData);
         setHouses(housesData);
+        setCarouselImage(carouselDate)
       } catch (error) {
         setError('Error fetching data');
         console.error('Error fetching data:', error);
@@ -138,16 +38,6 @@ export default function Firstbody() {
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    const nextSlideAuto = () => {
-      setCurrentIndex((previousIndex) => (previousIndex + 1) % images.length);
-    };
-
-    const intervalId = setInterval(nextSlideAuto, 3000);
-
-    return () => clearInterval(intervalId);
   }, []);
 
   const toggleModal = (modal: string) => {
@@ -159,7 +49,6 @@ export default function Firstbody() {
       setVisible(false);
     }
   };
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -168,9 +57,12 @@ export default function Firstbody() {
       <div className="basis-1/3 xl:basis-1/4 pr-9 md:pt-1 pt-6 xl:pt-7">
         <div className='flex flex-col items-center ml-4 w-full'>
           <Search classname='max-w-xl mx-auto w-full pb-8 pt-3 sm:block hidden'/>
-            <div className="sm:block hidden">
-              <EmblaCarousel slides={carousel} options={OPTIONS} />
-            </div>
+            {carouselimage.map(image => (  
+              <div key={image.id} className="sm:block hidden">
+                <EmblaCarousel slides={image.carouselleft} options={OPTIONS} />
+              </div>
+
+            ))}
             {/* small screen */}
             <Search classname='max-w-xl mx-auto w-full pb-8 pt-3 md:hidden block'/>
             <div className="flex items-center justify-between w-full sm:hidden block ml-9">
@@ -258,24 +150,21 @@ export default function Firstbody() {
               Coming soon
             </p>
           </div>
-          <div className='shop1 mx-auto max-w-[58em] h-[20em] xl:h-[40em] p-1'>
-            <Image
-              src={images[currentIndex]}
-              alt={"images"}
-              width={1200}
-              height={1000}
-              priority
-              className="w-full max-h-[40em] h-[20em] mb-10"
-            />
-          </div>
+          {carouselimage.map(image => ( 
+            <div key={image.id} className='shop1 mx-auto max-w-[58em] h-[20em] xl:h-[40em] p-1'>
+              <Imagecarousel images ={image.carouselsoon} classname ={"w-full max-h-[40em] h-[20em] mb-10"}/>
+            </div>
+          ))}
         </motion.div>
       </div>
       <div className="bg-white xl:basis-1/4 basis-1/3 px-3 md:pt-1 pt-6 xl:pt-7">
         <div className='flex flex-col xl:items-center mr-4 xl:text-center w-full'>
           <Search classname='max-w-xl mx-auto w-full pb-8 pt-3 sm:block hidden'/>
-            <div className="md:block hidden">
-              <EmblaCarousel slides={carousels} options={OPTIONS} />
+          {carouselimage.map(image => ( 
+            <div key={image.id} className="md:block hidden">
+              <EmblaCarousel slides={image.carouselright} options={OPTIONS} />
             </div>
+          ))}
 
             <div className="w-full text-sm z-[99]">
                 <ul className="font-medium flex flex-col mt-4 gap-4 rounded-lg ml-2 md:bg-transparent">

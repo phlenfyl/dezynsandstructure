@@ -5,14 +5,15 @@ import { useSession } from 'next-auth/react';
 import React, { FormEvent, Suspense, useEffect, useState } from 'react'
 import Image from 'next/image';
 import { EmptyCart } from './Cartempty';
-import { CART_URL } from '@/app/api/auth/api';
+import { CART_URL, getCart } from '@/app/api/auth/api';
 import { useRouter } from 'next/navigation';
+import { useCart } from '@/context/CartContext';
 
-const areaDataCache = {};
 export default function Cart() {
     const router = useRouter()
     const { data: session, status } = useSession();
-    const [cart, setCart] = useState<CartItem[]>([]);
+    const [cart, setCart, ] = useState<CartItem[]>([]);
+    const { clearCart, addToCart } = useCart();
     const [cartId, setCartId] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -28,19 +29,10 @@ export default function Cart() {
                 }
                 console.log(`${session?.access_token}`)
 
-                const response = await fetch(`https://dnstructures.pythonanywhere.com/cart/`, 
-                {
-                    headers: {
-                        Authorization: `Bearer ${session?.access_token}`
-                    },           
-                    cache: 'no-store',
-                    next: { revalidate: 1300 },
-                }
-                );
-                // console.log(response.json())
-                const data = await response.json()
-                if (data){
-                    setCart(data)
+                const response = await getCart('cart', session?.access_token)
+                if (response){
+                    setCart(response)
+                    response.forEach((item: CartItem) => addToCart(item));
                     console.log(cart)
                 }
                 else{
@@ -80,6 +72,7 @@ export default function Cart() {
             console.log(response.data)
             if (response.data.message){
                 const updatedCart = cart.filter(item => item.id != Number(cartid));
+                clearCart();
                 setCart(updatedCart);
                 calculateTotalPrice(updatedCart)
                 setCartId("");
@@ -88,7 +81,7 @@ export default function Cart() {
             console.error('Error deleting from cart:', error);
         }
     }
-    if (cart.length < 1){
+    if (cart.length < 1 || !cart ){
         return <EmptyCart/>
     }
     
@@ -109,9 +102,9 @@ export default function Cart() {
                                                 <Image width={100} height={20} className="hidden h-20 w-20 dark:block rounded" src={`${CART_URL}${slide.product_image}`} alt={slide.product_alt} />
                                             </a>
 
-                                            <label htmlFor="counter-input" className="sr-only text-[#451606]">Choose quantity:</label>
                                             <div className="flex items-center justify-between md:order-3 md:justify-end">
-                                                <div className="flex items-center">
+                                                <div className="items-center">
+                                                    <label htmlFor="" className="text-sm">Quantity</label> <br />
                                                     <input type="text" id="counter-input" data-input-counter className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" placeholder="" value={slide.quantity} required />
                                                 </div>
                                                 <div className="text-end md:order-4 md:w-32">

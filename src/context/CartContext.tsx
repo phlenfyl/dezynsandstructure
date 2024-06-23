@@ -2,13 +2,16 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { CartItem } from '@/app/api/auth/types';
 import { useSession } from 'next-auth/react';
+import { getCart } from '@/app/api/auth/api';
 
 interface CartContextType {
     cart: CartItem[];
     totalQuantity: number;
     totalPrice: number;
+    plan_name: string;
     addToCart: (item: CartItem) => void;
     removeFromCart: (itemId: string) => void;
+    clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -26,18 +29,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     const [cart, setCart] = useState<CartItem[]>([]);
     const [totalQuantity, setTotalQuantity] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [plan_name, setPlanName] = useState('')
 
     useEffect(() => {
         const fetchCart = async () => {
             if (!session) return;
             try {
-                const response = await fetch('https://dnstructures.pythonanywhere.com/cart/', {
-                    headers: { Authorization: `Bearer ${session?.access_token}` },
-                    cache: 'no-store',
-                });
-                const data = await response.json();
-                setCart(data);
-                updateCartTotals(data);
+                const response = await getCart('cart', session?.access_token)
+                setCart(response);
+                updateCartTotals(response);
             } catch (error) {
                 console.error('Error fetching cart:', error);
             }
@@ -59,6 +59,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         const updatedCart = [...cart, item];
         setCart(updatedCart);
         updateCartTotals(updatedCart);
+        setPlanName(item.plan_name?? '')
     };
 
     const removeFromCart = (itemId: string) => {
@@ -71,11 +72,20 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             setTotalPrice(updatedPrice);
         }
         setCart(updatedCart);
+
+        const remainingPlanNames = updatedCart.map((item) => item.plan_name ?? '');
+        setPlanName(remainingPlanNames.join(', '));
     };
     console.log(totalPrice)
+    const clearCart = () => {  // Add this function
+        setCart([]);
+        setTotalQuantity(0);
+        setTotalPrice(0);
+        setPlanName('');
+    };
 
     return (
-        <CartContext.Provider value={{ cart, totalQuantity, totalPrice, addToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cart, totalQuantity, totalPrice, plan_name, addToCart, removeFromCart, clearCart }}>
             {children}
         </CartContext.Provider>
     );

@@ -76,3 +76,39 @@ export interface CartItem {
     plan_name: string | null;
     quantity: number;
 }
+
+// types.ts
+export interface CarouselImage {
+    id: number;
+    carouselsoon: ComingSoon[];
+    carouselleft: LeftImage[];
+    carouselright: RightImage[];
+    created: string
+}
+
+export interface ComingSoon {
+    id: number;
+    image: string;
+    alt_text: string;
+    created: string;
+    carousel: number;
+}
+
+export interface LeftImage {
+    id: number;
+    image: string;
+    alt_text: string;
+    created: string;
+    carousel: number;
+}
+
+export interface RightImage {
+    id: number;
+    image: string;
+    alt_text: string;
+    created: string;
+    carousel: number;
+}
+
+
+

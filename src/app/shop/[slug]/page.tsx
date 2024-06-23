@@ -105,7 +105,7 @@ export default function Page() {
                 
                 {products.map((slide) => (
                     <div key={slide.id} className="shop1 px-4 p-1 pb-7 mt-5 relative">
-                        <Imagecarousel images={slide.product_images} baseUrl={API_URL}/>
+                        <Imagecarousel images={slide.product_images} baseUrl={API_URL} classname ={"w-full max-h-[40em] lg:h-[35em] rounded-lg shadow-xl md:h-[20em] h-[15em] mb-10"}/>
 
                         <div className="w-full relative max-w-[55em] -mt-[8em] lg:-mt-[15em] z-[99] bg-black/50 font-semibold text-white py-4 lg:py-10 mx-auto rounded-lg">
                             <div className='mx-10'>

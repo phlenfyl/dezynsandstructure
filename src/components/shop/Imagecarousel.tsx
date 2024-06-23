@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { ProductImage } from '@/app/api/auth/types';
+import { ProductImage, ComingSoon } from '@/app/api/auth/types';
 import Image from 'next/image';
 
 interface ImageCarouselProps {
-    images: ProductImage[];
+    images: ProductImage[] | ComingSoon[];
     baseUrl?: string;
+    classname?: string;
 }
 
-export const Imagecarousel = ({ images, baseUrl = '' }: ImageCarouselProps) => {
+export const Imagecarousel = ({ images, baseUrl = '', classname = '' }: ImageCarouselProps) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
     useEffect(() => {
@@ -24,7 +25,7 @@ export const Imagecarousel = ({ images, baseUrl = '' }: ImageCarouselProps) => {
             width={1200}
             height={1000}
             priority
-            className="w-full max-h-[40em] lg:h-[35em] rounded-lg shadow-xl md:h-[20em] h-[15em] mb-10"
+            className={classname}
         />
     )
 }
